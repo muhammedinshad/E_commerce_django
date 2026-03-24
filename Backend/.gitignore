@@ -1,0 +1,12 @@
+
+__pycache__/
+*.pyc
+*.pyo
+
+.env
+.env.docker
+E_commerce_venv/
+
+
+staticfiles/
+media/
