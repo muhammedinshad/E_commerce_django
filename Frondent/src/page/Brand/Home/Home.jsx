@@ -6,7 +6,7 @@ function Home() {
     // 1. Define your media list (mix of videos and images)
     const mediaItems = [
         { type: 'video', src: '/intro2.mp4' },
-        { type: 'image', src: '/https://i.pinimg.com/736x/7d/85/11/7d8511a2fdfe40b593fb9b282220efd1.jpg' },
+        { type: 'video', src: '/intro3.png' },
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
