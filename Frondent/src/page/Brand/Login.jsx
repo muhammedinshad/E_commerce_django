@@ -143,12 +143,6 @@ function Login() {
                         </button>
                     </div>
 
-                    <div className="text-right">
-                        <button type="button" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-600 transition-colors">
-                            Forgot Password?
-                        </button>
-                    </div>
-
                     <button
                         type="submit"
                         disabled={loading}
