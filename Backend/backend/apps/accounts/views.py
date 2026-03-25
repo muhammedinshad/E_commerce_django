@@ -9,6 +9,9 @@ from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 from apps.smtp.smtp import send_welcome_email
 
+from django.contrib.auth import authenticate
+from apps.accounts.models import UserModel
+
 from .models import UserModel
 
 
@@ -99,6 +102,53 @@ class GoogleLoginView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+class CustomLoginView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email    = request.data.get("email")
+        password = request.data.get("password")
+
+        if not email or not password:
+            return Response(
+                {"error": "Email and password required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+            
+        try:
+            user = UserModel.objects.get(email=email)
+        except UserModel.DoesNotExist:
+            return Response(
+                {"error": "Invalid credentials"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        if not user.is_active:
+            return Response(
+                {"error": "Your account has been blocked. Contact support."},
+                status=status.HTTP_403_FORBIDDEN   
+            )
+
+        if not user.check_password(password):
+            return Response(
+                {"error": "Invalid credentials"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        refresh = RefreshToken.for_user(user)
+
+        return Response({
+            "access":  str(refresh.access_token),
+            "refresh": str(refresh),
+            "user": {
+                "id":           user.id,
+                "email":        user.email,
+                "username":     user.username,
+                "role":         user.role,
+                "is_superuser": user.is_superuser,
+                "is_active":    user.is_active,
+            }
+        }, status=status.HTTP_200_OK)
 
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]

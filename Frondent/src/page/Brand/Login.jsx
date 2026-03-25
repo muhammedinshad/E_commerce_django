@@ -51,12 +51,11 @@ function Login() {
             }
 
         } catch (err) {
-            if (err.response?.status === 401) {
-                toast.error("Invalid credentials!")
-            } else if (err.response?.status === 403) {
+            console.log(err)
+            if (err.response?.status === 403) {
                 toast.error("Your account is blocked!")
             } else {
-                toast.error("Network error. Try again.")
+                toast.error("Invalid credentials!")
             }
         } finally {
             setLoading(false);
