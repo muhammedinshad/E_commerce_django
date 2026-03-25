@@ -8,8 +8,6 @@ from django.conf import settings
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 from apps.smtp.smtp import send_welcome_email
-
-from django.contrib.auth import authenticate
 from apps.accounts.models import UserModel
 
 from .models import UserModel
@@ -75,7 +73,6 @@ class GoogleLoginView(APIView):
                     status=status.HTTP_403_FORBIDDEN
                 )
 
-            # Generate JWT tokens
             refresh = RefreshToken.for_user(user)
 
             return Response({

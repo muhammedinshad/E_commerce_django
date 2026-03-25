@@ -164,7 +164,7 @@ class BrandDetailView(views.APIView):
             )
 
 
-# ==================== Size ====================
+# ======== Size =========
 class SizeView(views.APIView):
     permission_classes = [IsAuthenticated]  
     def get(self, request):

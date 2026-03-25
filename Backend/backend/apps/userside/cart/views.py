@@ -1,7 +1,6 @@
 from rest_framework import views, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from django.shortcuts import get_object_or_404
 from .models import Cart
 from .serializer import CartSerializer
 from django.db import transaction 
@@ -64,7 +63,7 @@ class CartDetailView(views.APIView):
 
     def patch(self, request, pk):
         try:
-            cart_item = get_object_or_404(Cart, pk=pk, user=request.user)
+            cart_item = Cart.objects.get(pk=pk, user=request.user)
             serializer = CartSerializer(cart_item, data=request.data, partial=True)
 
             if serializer.is_valid():
@@ -79,10 +78,9 @@ class CartDetailView(views.APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-    # DELETE remove item from cart
     def delete(self, request, pk):
         try:
-            cart_item = get_object_or_404(Cart, pk=pk, user=request.user)
+            cart_item = Cart.objects.get(pk=pk, user=request.user)
             cart_item.delete()
             return Response(
                 {"message": "Item removed from cart"},
