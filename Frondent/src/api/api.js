@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 
 // ==================== Django Auth API ====================
 const DJANGO_API = axios.create({
-  baseURL: "http://98.93.254.237",
+  baseURL: "http://shoecart.duckdns.org/",
 });
 
 // Axios Interceptor for Token Refresh
@@ -30,7 +30,7 @@ const scheduleTokenRefresh = (token) => {
       try {
         const refreshToken = localStorage.getItem("refreshToken")?.replace(/^"|"$/g, '')
         if (refreshToken) {
-          const res = await axios.post("http://98.93.254.237/user/login/refresh/", {
+          const res = await axios.post("http://shoecart.duckdns.org/user/login/refresh/", {
             refresh: refreshToken,
           });
           const newAccessToken = res.data.access;
@@ -87,7 +87,7 @@ DJANGO_API.interceptors.response.use(
           throw new Error("No refresh token available");
         }
 
-        const res = await axios.post("http://98.93.254.237/user/login/refresh/", {
+        const res = await axios.post("http://shoecart.duckdns.org/user/login/refresh/", {
           refresh: refreshToken,
         });
 
