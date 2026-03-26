@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import AdminNav from "./AdminNav";
 import Dashboard from "./page/Dashboard";
 import AdminOrders from "./page/AdminOrders";
 import AdminUsers from "./page/AdminUsers";
 import AdminProducts from "./page/AdminProducts";
-import AdminSidebar from "./AdminSideBar";
 import AddProduct from "./page/AdminAddProducte";
 import ProductEdit from "./page/ProductEdit";
 import AdminProfile from "./page/AdminProfile";
