@@ -264,13 +264,13 @@ class Command(BaseCommand):
             self.stdout.write("  ⚠️  Admin already exists")
 
         # Test user
-        if not UserModel.objects.filter(username="inshad").exists():
+        if not UserModel.objects.filter(username="demo").exists():
             UserModel.objects.create_user(
-                username = "inshad",
-                email    = "inshd@gmail.com",
-                password = "inshad123",
+                username = "demo",
+                email    = "demo@gmail.com",
+                password = "demo123",
                 role     = "admin",
             )
-            self.stdout.write(" Test user: inshd@gmail.com / inshad123")
+            self.stdout.write(" Test user: demo@gmail.com / demo123")
         else:
-            self.stdout.write(" Test user already exists")
+            self.stdout.write(" demo admin user already exists")
