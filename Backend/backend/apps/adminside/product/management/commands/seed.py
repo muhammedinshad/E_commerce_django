@@ -268,9 +268,9 @@ class Command(BaseCommand):
             UserModel.objects.create_user(
                 username = "inshad",
                 email    = "inshd@gmail.com",
-                password = "test123",
+                password = "inshad123",
                 role     = "admin",
             )
-            self.stdout.write(" Test user: test@shoecart.com / test123")
+            self.stdout.write(" Test user: inshd@gmail.com / inshad123")
         else:
             self.stdout.write(" Test user already exists")
