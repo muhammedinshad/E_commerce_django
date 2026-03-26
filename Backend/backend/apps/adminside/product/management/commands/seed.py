@@ -266,7 +266,7 @@ class Command(BaseCommand):
         # Test user
         if not UserModel.objects.filter(username="testuser").exists():
             UserModel.objects.create_user(
-                username = "testuser",
+                username = "inshad",
                 email    = "inshd@gmail.com",
                 password = "test123",
                 role     = "admin",
