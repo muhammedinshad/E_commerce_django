@@ -34,15 +34,10 @@ function App() {
 
   const token = localStorage.getItem("accessToken");
   const isAdmin = localStorage.getItem("isAdmin") === "true";
-  
-  // Debug log to help track transitions
-  useEffect(() => {
-    console.log(`Route changed to: ${location.pathname}, isAdmin: ${isAdmin}`);
-  }, [location, isAdmin]);
 
   return (
     <div className="bg-linear-to-br from-green-50 to-gray-100">
-      <ToastContainer position="top-center" autoClose={2000} hideProgressBar />
+      <ToastContainer position="top-center" autoClose={2000} limit={1} hideProgressBar />
       {!isAdmin && <NaveBar />}
       <Routes>
         <Route path="adminpage/*" element={<Admin />} />

@@ -12,6 +12,8 @@ function Details() {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [addedToCart, setAddedToCart] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,15 +27,20 @@ function Details() {
     <div className="h-screen flex items-center justify-center">Loading...</div>
   );
 
-  const outOfStock = product.stock === 0;  // ✅ stock check
+  const outOfStock = product.stock === 0;
 
   const handleAddToCart = () => {
-    if (outOfStock) return;
+    if (outOfStock || isAddingToCart || addedToCart) return;
     if (!selectedSize) { toast.info("Select a size"); return; }
     const token = localStorage.getItem("accessToken")?.replace(/^"|"$/g, '');
+    setIsAddingToCart(true);
     addToCart({ product: product.id, size: selectedSize }, token)
-      .then(() => toast.success("Added to cart!"))
-      .catch(() => toast.error("Failed to add to cart."));
+      .then(() => {
+        toast.success("Added to cart!");
+        setAddedToCart(true);
+      })
+      .catch(() => toast.error("Failed to add to cart."))
+      .finally(() => setIsAddingToCart(false));
   };
 
   const handleBuyNow = () => {
@@ -71,9 +78,8 @@ function Details() {
           <img
             src={product.image}
             alt={product.name}
-            className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${
-              outOfStock ? "grayscale opacity-70" : ""  // ✅ grey out if no stock
-            }`}
+            className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${outOfStock ? "grayscale opacity-70" : ""  // ✅ grey out if no stock
+              }`}
           />
         </div>
 
@@ -93,18 +99,17 @@ function Details() {
             <span className="text-2xl font-black text-slate-900">₹{product.price}</span>
 
             {/* ✅ Dynamic stock badge */}
-            <span className={`text-xs px-2 py-0.5 rounded font-bold ${
-              outOfStock
-                ? "bg-red-100 text-red-700"
-                : product.stock <= 5
+            <span className={`text-xs px-2 py-0.5 rounded font-bold ${outOfStock
+              ? "bg-red-100 text-red-700"
+              : product.stock <= 5
                 ? "bg-amber-100 text-amber-700"
                 : "bg-emerald-100 text-emerald-700"
-            }`}>
+              }`}>
               {outOfStock
                 ? "OUT OF STOCK"
                 : product.stock <= 5
-                ? `ONLY ${product.stock} LEFT`
-                : `${product.stock} IN STOCK`}
+                  ? `ONLY ${product.stock} LEFT`
+                  : `${product.stock} IN STOCK`}
             </span>
           </div>
 
@@ -124,13 +129,12 @@ function Details() {
                   key={s}
                   onClick={() => !outOfStock && setSelectedSize(s)}
                   disabled={outOfStock}
-                  className={`h-10 w-10 text-xs rounded-xl font-bold transition-all flex items-center justify-center border ${
-                    outOfStock
-                      ? "bg-gray-100 text-gray-300 border-gray-200 cursor-not-allowed"
-                      : selectedSize === s
+                  className={`h-10 w-10 text-xs rounded-xl font-bold transition-all flex items-center justify-center border ${outOfStock
+                    ? "bg-gray-100 text-gray-300 border-gray-200 cursor-not-allowed"
+                    : selectedSize === s
                       ? "bg-slate-900 text-white border-slate-900 shadow-lg"
                       : "bg-white text-slate-600 border-slate-200 hover:border-slate-400"
-                  }`}
+                    }`}
                 >
                   {s}
                 </button>
@@ -144,25 +148,28 @@ function Details() {
             {/* Cart button */}
             <button
               onClick={handleAddToCart}
-              disabled={outOfStock}
-              className={`flex-1 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
-                outOfStock
+              disabled={outOfStock || isAddingToCart || addedToCart}
+              className={`flex-1 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${outOfStock
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-slate-100 text-slate-900 hover:bg-slate-200"
-              }`}
+                  : addedToCart
+                    ? "bg-green-100 text-green-600 cursor-not-allowed"
+                    : isAddingToCart
+                      ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                      : "bg-slate-100 text-slate-900 hover:bg-slate-200"
+                }`}
             >
-              <FiShoppingBag size={16} /> Cart
+              <FiShoppingBag size={16} />
+              {addedToCart ? "✓ Added!" : isAddingToCart ? "Adding..." : "Cart"}
             </button>
 
             {/* Buy Now button */}
             <button
               onClick={handleBuyNow}
               disabled={outOfStock}
-              className={`flex-[2] py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all active:scale-95 ${
-                outOfStock
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed shadow-none"
-                  : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-100"
-              }`}
+              className={`flex-[2] py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all active:scale-95 ${outOfStock
+                ? "bg-gray-200 text-gray-400 cursor-not-allowed shadow-none"
+                : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-100"
+                }`}
             >
               <FiZap size={16} />
               {outOfStock ? "Out of Stock" : "Buy Now"}

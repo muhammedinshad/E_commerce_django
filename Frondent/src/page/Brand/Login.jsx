@@ -158,7 +158,6 @@ function Login() {
                     <hr className="flex-1 border-gray-300" />
                 </div>
 
-                {/* ✅ Google button */}
                 <div className="flex justify-center">
                     <GoogleLogin
                         onSuccess={handleGoogleSuccess}

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { registerDjangoUser } from "../../api/api";
+import { registerDjangoUser, googleLogin } from "../../api/api";
 import { toast } from "react-toastify";
 import { FiUser, FiMail, FiLock, FiArrowRight } from "react-icons/fi";
+import { GoogleLogin } from '@react-oauth/google'
 
 function Register() {
   const navigate = useNavigate();
@@ -38,6 +39,33 @@ function Register() {
         }
       });
   };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const res = await googleLogin({
+        token: credentialResponse.credential
+
+      })
+
+      const { access, refresh, user } = res.data
+
+      localStorage.setItem("accessToken", access)
+      localStorage.setItem("refreshToken", refresh)
+      if (user.role == "admin") {
+        localStorage.setItem("isAdmin", "true")
+        toast.success("Welcome Admin!")
+        navigate("/adminpage/dashboard")
+      } else {
+        localStorage.setItem("isAdmin", "false")
+        toast.success("Google login successful!")
+        navigate("/")
+      }
+
+    } catch (err) {
+      const msg = err.response?.data?.error
+      toast.error(msg || "Google login failed!")
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-6 pt-24">
@@ -120,6 +148,24 @@ function Register() {
           </button>
         </form>
 
+        <div className="flex items-center gap-3 my-4">
+          <hr className="flex-1 border-gray-300" />
+          <span className="text-gray-400 text-sm">OR</span>
+          <hr className="flex-1 border-gray-300" />
+        </div>
+
+        <div className="flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => toast.error("Google login failed")}
+            useOneTap
+            text="continue_with"
+            shape="rectangular"
+            theme="outline"
+            size="large"
+            width="300"
+          />
+        </div>
         <div className="mt-8 text-center">
           <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">
             Already a member?{" "}

@@ -94,7 +94,7 @@ function Product() {
                 </>
             ) : (
                 <div className="text-center py-20 text-gray-500">
-                    <p className="text-xl">🔍 No shoes found for "{search}"</p>
+                    <p className="text-xl">No shoes found for "{search}"</p>
                     <p className="text-sm">Try a different search term</p>
                 </div>
             )}

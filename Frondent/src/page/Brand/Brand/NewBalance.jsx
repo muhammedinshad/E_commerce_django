@@ -30,14 +30,16 @@ function NewBalance() {
             <div>
                 <img src="newbalance.jpg" alt="" className=' w-full mt-4' />
             </div>
+            <div id="product-section">
             {productData.length > 0 ? (
                 useFrame(productData)
             ) : (
                 <div className="text-center py-20 text-gray-500">
-                    <p className="text-xl">🔍 No shoes found for "{search}"</p>
+                    <p className="text-xl"> No shoes found for "{search}"</p>
                     <p className="text-sm">Try a different search term</p>
                 </div>
             )}
+        </div>
         </div>
     )
 }

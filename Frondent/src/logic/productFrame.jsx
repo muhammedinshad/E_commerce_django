@@ -2,19 +2,30 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 export function useFrame(sarch) {
-
   return (
-    <div style={{
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-      gap: "24px",
-      padding: "32px 24px",
-      fontFamily: "'Trebuchet MS', sans-serif",
-    }}>
-      {sarch.map((item) => (
-        <ProductCard key={item.id} item={item} />
-      ))}
-    </div>
+    <>
+      <style>{`
+        .product-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+          padding: 16px 12px;
+          font-family: 'Trebuchet MS', sans-serif;
+        }
+        @media (min-width: 640px) {
+          .product-grid {
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+            padding: 32px 24px;
+          }
+        }
+      `}</style>
+      <div className="product-grid">
+        {sarch.map((item) => (
+          <ProductCard key={item.id} item={item} />
+        ))}
+      </div>
+    </>
   )
 }
 
