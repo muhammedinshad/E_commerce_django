@@ -17,6 +17,7 @@ import Product from "./page/Brand/Home/Product"
 import PlaceOrder from "./page/Brand/placeOrder"
 import OrderPage from "./page/Brand/OrderPage"
 import OrderSuccessfully from "./page/Brand/OrderSuccessfully"
+import About from "./page/Brand/About"
 // Admin side
 import Admin from "./AdiminPage/Admin"
 
@@ -55,6 +56,7 @@ function App() {
         <Route path="placeorder" element={<PlaceOrder />} />
         <Route path="order" element={<OrderPage />} />
         <Route path="ordersuccess" element={<OrderSuccessfully />} />
+        <Route path="about" element={<About />} />
       </Routes>
     </div>
   );

@@ -1,170 +1,65 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 export function useFrame(sarch) {
   return (
-    <>
-      <style>{`
-        .product-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 12px;
-          padding: 16px 12px;
-          font-family: 'Trebuchet MS', sans-serif;
-        }
-        @media (min-width: 640px) {
-          .product-grid {
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 24px;
-            padding: 32px 24px;
-          }
-        }
-      `}</style>
-      <div className="product-grid">
-        {sarch.map((item) => (
-          <ProductCard key={item.id} item={item} />
-        ))}
+    <div className="bg-white min-h-screen font-sans">
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        
+        {/* 3-Column Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 gap-y-5">
+          {sarch.map((item) => (
+            <ProductCard key={item.id} item={item} />
+          ))}
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 
 function ProductCard({ item }) {
-  const [hovered, setHovered] = useState(false);
-  const [imgHovered, setImgHovered] = useState(false);
+  const discount = item.oldPrice 
+    ? Math.round(((item.oldPrice - item.price) / item.oldPrice) * 100) 
+    : null;
 
   return (
     <NavLink
       to={`/deteals/${item.id}`}
-      style={{ textDecoration: "none" }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      // Added a slightly more defined border color to match the screenshot box
+      className="group flex flex-col no-underline border border-[#e5e7eb] hover:border-blue-400 transition-all duration-300 bg-white"
     >
-      <div style={{
-        background: "#ffffff",
-        borderRadius: "12px",
-        overflow: "hidden",
-        border: hovered ? "1px solid rgba(255,59,48,0.4)" : "1px solid rgba(0,0,0,0.08)",
-        transition: "all 0.3s ease",
-        transform: hovered ? "translateY(-4px)" : "translateY(0)",
-        boxShadow: hovered
-          ? "0 16px 40px rgba(255,59,48,0.12), 0 4px 12px rgba(0,0,0,0.08)"
-          : "0 2px 8px rgba(0,0,0,0.06)",
-        position: "relative",
-      }}>
+      {/* 1. Pure White Image Container */}
+      <div className="relative aspect-square flex items-center justify-center bg-white overflow-hidden p-2">
 
-        {/* Red top bar on hover */}
-        <div style={{
-          position: "absolute",
-          top: 0, left: 0, right: 0,
-          height: "3px",
-          background: "#FF3B30",
-          transform: hovered ? "scaleX(1)" : "scaleX(0)",
-          transformOrigin: "left",
-          transition: "transform 0.3s ease",
-          zIndex: 2,
-        }} />
-
-        {/* Image container */}
-        <div
-          style={{
-            width: "100%",
-            aspectRatio: "1 / 1",
-            overflow: "hidden",
-            background: "#f7f7f7",
-            position: "relative",
+        <img
+          src={item.image}
+          alt={item.name}
+          // mix-blend-multiply ensures that if the source image has a 
+          // slightly off-white background, it disappears into the plain white container
+          className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "https://placehold.co/600x600/ffffff/000000?text=No+Image";
           }}
-          onMouseEnter={() => setImgHovered(true)}
-          onMouseLeave={() => setImgHovered(false)}
-        >
-          <img
-            src={item.image}
-            alt={item.name}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "https://placehold.co/600x600?text=No+Image";
-            }}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              transition: "transform 0.5s ease",
-              transform: imgHovered ? "scale(1.08)" : "scale(1)",
-              display: "block",
-            }}
-          />
+        />
+      </div>
 
-          {/* Dark overlay on hover */}
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            background: "rgba(0,0,0,0.15)",
-            opacity: hovered ? 1 : 0,
-            transition: "opacity 0.3s ease",
-          }} />
-
-          {/* Quick view badge */}
-          <div style={{
-            position: "absolute",
-            bottom: "12px",
-            left: "50%",
-            transform: hovered ? "translateX(-50%) translateY(0)" : "translateX(-50%) translateY(10px)",
-            opacity: hovered ? 1 : 0,
-            transition: "all 0.3s ease",
-            background: "#FF3B30",
-            color: "#ffffff",
-            fontSize: "11px",
-            fontWeight: "700",
-            letterSpacing: "1.5px",
-            textTransform: "uppercase",
-            padding: "7px 18px",
-            borderRadius: "20px",
-            whiteSpace: "nowrap",
-          }}>
-            View Details
-          </div>
-        </div>
-
-        {/* Content */}
-        <div style={{ padding: "16px 18px 18px" }}>
-
-          {/* Brand */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
-            <span style={{
-              fontSize: "10px",
-              fontWeight: "700",
-              letterSpacing: "2px",
-              textTransform: "uppercase",
-              color: "#FF3B30",
-            }}>
-              {item.brand}
+      {/* 2. Product Details - Aligned to bottom-left with consistent padding */}
+      <div className="flex flex-col space-y-2 p-6 pt-0">
+        <h3 className="text-[15px] text-[#1e40af] group-hover:text-blue-600 font-normal leading-tight">
+          {item.name}
+        </h3>
+        
+        <div className="flex items-center gap-3">
+          <span className="text-[18px] font-bold text-black">
+            ${item.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+          </span>
+          
+          {item.oldPrice && (
+            <span className="text-[14px] text-gray-400 line-through">
+              ${item.oldPrice.toLocaleString(undefined, { minimumFractionDigits: 2 })}
             </span>
-
-            {/* Red dot accent */}
-            <span style={{
-              width: "6px", height: "6px",
-              borderRadius: "50%",
-              background: hovered ? "#FF3B30" : "#e0e0e0",
-              transition: "background 0.3s",
-              display: "inline-block",
-            }} />
-          </div>
-
-          {/* Product name */}
-          <p style={{
-            fontSize: "14px",
-            fontWeight: "700",
-            color: "#111111",
-            margin: "0 0 10px",
-            lineHeight: "1.4",
-            letterSpacing: "0.2px",
-          }}>
-            {item.name}
-          </p>
-
-          {/* Price + arrow */}
-
-
+          )}
         </div>
       </div>
     </NavLink>

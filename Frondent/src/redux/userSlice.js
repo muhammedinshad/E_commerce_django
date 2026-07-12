@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
 const initialState = {
     order: ["heloo"],
     search: "",
@@ -7,6 +8,7 @@ const initialState = {
     cartData: [],
     buyData: [],
     button: "",
+    brand : "",
 };
 
 export const userSlice = createSlice({
@@ -31,6 +33,9 @@ export const userSlice = createSlice({
         setButton: (state, action) => {
             state.button = action.payload;
         },
+        setBrand: (state,action) => {
+            state.brand = action.payload;
+        },
     },
 });
 
@@ -40,7 +45,8 @@ export const {
     setProduct,
     setCartData,
     setBuyData,
-    setButton
+    setButton,
+    setBrand
 } = userSlice.actions;
 
 export default userSlice.reducer;

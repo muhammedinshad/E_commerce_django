@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Product from './Product';
 import Footer from "../../../Components/Footer";
+import BrandHorizontal from '../../../Components/BrandCategories';
+import TrendingProducts from './Trendingproducts ';
 
 const slides = [
   { 
@@ -65,7 +67,7 @@ function Home() {
         position: "relative", 
         width: "100%", 
         // DESKTOP: 85vh | MOBILE: 50vh (Half Screen)
-        height: isMobile ? "50vh" : "85vh", 
+        height: isMobile ? "50vh" : "95vh", 
         overflow: "hidden", 
         backgroundColor: '#000',
         transition: "height 0.3s ease" // Smooth transition if resizing
@@ -143,10 +145,10 @@ function Home() {
         </div>
       </section>
 
-      {/* Product Section */}
-      <div id="product-section"  style={{ padding: isMobile ? "20px 0" : "40px 0" }}>
-          <Product />
-      </div>
+      <BrandHorizontal isMobile={isMobile} />
+
+      <TrendingProducts isMobile={isMobile} />
+
 
       <Footer />
     </div>
