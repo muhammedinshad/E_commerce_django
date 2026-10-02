@@ -59,10 +59,10 @@ function Product() {
     const totalPages = Math.ceil(totalCount / 20);
 
     return (
-        <div id="product-section" className="bg-white min-h-screen">
+        <div id="product-section" className="bg-white min-h-screen pf-shop">
             
             {/* Section Title */}
-            <div className="flex justify-center mt-32 md:mt-40">
+            <div className="flex justify-center mt-6 md:mt-8">
                 <h2 className="text-3xl font-light tracking-[0.3em] uppercase text-black">Sale</h2>
             </div>
 

@@ -58,6 +58,7 @@ function App() {
         <Route path="ordersuccess" element={<OrderSuccessfully />} />
         <Route path="about" element={<About />} />
       </Routes>
+      {!isAdmin && <Footer />}
     </div>
   );
 }

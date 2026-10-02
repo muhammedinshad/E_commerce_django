@@ -2,65 +2,110 @@ import React from "react";
 import { FaInstagram, FaTwitter, FaDiscord } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
+const socials = [
+  { name: "Instagram", icon: FaInstagram },
+  { name: "Twitter", icon: FaTwitter },
+  { name: "Discord", icon: FaDiscord },
+];
+
 function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-white border-t border-gray-100 pt-16 pb-8 px-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
+    <footer className="ft-footer">
+      <div className="ft-container">
+        {/* --- Top area --- */}
+        <div className="ft-grid">
+          {/* Column 1 — Brand */}
+          <div className="ft-brand">
+            <NavLink to="/" className="ft-logo" aria-label="ShoeCart home">
+              Shoecart
+            </NavLink>
 
-          {/* Brand & Mission */}
-          <div className="max-w-xs">
-            <h2 className="text-xl font-black tracking-tighter text-gray-900 mb-4">
-              SOLE<span className="text-blue-600">SCRIPT.</span>
-            </h2>
-            <p className="text-sm text-gray-400 leading-relaxed">
-              Curating the finest sneakers for the modern collector.
-              Quality and authenticity, delivered to your door.
+            <p className="ft-tagline">
+              Curating the finest sneakers for the modern collector. Quality and
+              authenticity, delivered to your door.
             </p>
+
+            <div className="ft-social">
+              {socials.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href="#"
+                    className="ft-social-link"
+                    aria-label={social.name}
+                    title={social.name}
+                  >
+                    <Icon size={16} aria-hidden="true" />
+                  </a>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Minimal Links Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 md:gap-24">
-            <div className="flex flex-col gap-3">
-              <p className="text-[11px] font-bold uppercase tracking-widest text-gray-900 mb-2">Shop</p>
-              <NavLink to="/nike" className="text-sm text-gray-400 hover:text-blue-600 transition-colors">Nike</NavLink>
-              <NavLink to="/adidas" className="text-sm text-gray-400 hover:text-blue-600 transition-colors">Adidas</NavLink>
-              <NavLink to="/new-arrivals" className="text-sm text-gray-400 hover:text-blue-600 transition-colors">New Drops</NavLink>
-            </div>
+          {/* Column 2 — Shop */}
+          <div>
+            <h2 className="ft-group-title">Shop</h2>
+            <ul className="ft-group-list">
+              <li>
+                <NavLink to="/nike" className="ft-link">Nike</NavLink>
+              </li>
+              <li>
+                <NavLink to="/adidas" className="ft-link">Adidas</NavLink>
+              </li>
+              <li>
+                <NavLink to="/new-arrivals" className="ft-link">New Drops</NavLink>
+              </li>
+            </ul>
+          </div>
 
-            <div className="flex flex-col gap-3">
-              <p className="text-[11px] font-bold uppercase tracking-widest text-gray-900 mb-2">Service</p>
-              <NavLink to="/orders" className="text-sm text-gray-400 hover:text-blue-600 transition-colors">Track Order</NavLink>
-              <NavLink to="/shipping" className="text-sm text-gray-400 hover:text-blue-600 transition-colors">Shipping</NavLink>
-              <NavLink to="/contact" className="text-sm text-gray-400 hover:text-blue-600 transition-colors">Help</NavLink>
-            </div>
+          {/* Column 3 — Service */}
+          <div>
+            <h2 className="ft-group-title">Service</h2>
+            <ul className="ft-group-list">
+              <li>
+                <NavLink to="/orders" className="ft-link">Track Order</NavLink>
+              </li>
+              <li>
+                <NavLink to="/shipping" className="ft-link">Shipping</NavLink>
+              </li>
+              <li>
+                <NavLink to="/contact" className="ft-link">Help</NavLink>
+              </li>
+            </ul>
+          </div>
 
-            <div className="flex flex-col gap-3">
-              <p className="text-[11px] font-bold uppercase tracking-widest text-gray-900 mb-2">Social</p>
-              <a href="#" className="text-sm text-gray-400 hover:text-blue-600 transition-colors flex items-center gap-2">
-                <FaInstagram /> Instagram
-              </a>
-              <a href="#" className="text-sm text-gray-400 hover:text-blue-600 transition-colors flex items-center gap-2">
-                <FaTwitter /> Twitter
-              </a>
-              <a href="#" className="text-sm text-gray-400 hover:text-blue-600 transition-colors flex items-center gap-2">
-                <FaDiscord /> Discord
-              </a>
-            </div>
+          {/* Column 4 — Social */}
+          <div>
+            <h2 className="ft-group-title">Social</h2>
+            <ul className="ft-group-list">
+              {socials.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <li key={social.name}>
+                    <a href="#" className="ft-link">
+                      <Icon size={14} aria-hidden="true" />
+                      {social.name}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
 
-        {/* Bottom Bar - Ultra Clean */}
-        <div className="pt-8 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[12px] text-gray-300 font-medium">
-            © {year} SOLESCRIPT INC. ALL RIGHTS RESERVED.
-          </p>
+        {/* --- Divider --- */}
+        <hr className="ft-divider" />
 
-          <div className="flex gap-8">
-            <NavLink to="/privacy" className="text-[11px] text-gray-300 hover:text-gray-900 transition-colors font-bold uppercase tracking-widest">Privacy</NavLink>
-            <NavLink to="/terms" className="text-[11px] text-gray-300 hover:text-gray-900 transition-colors font-bold uppercase tracking-widest">Terms</NavLink>
+        {/* --- Bottom bar --- */}
+        <div className="ft-bottom">
+          <p className="ft-copy">© {year} SOLESCRIPT INC. ALL RIGHTS RESERVED.</p>
+
+          <div className="ft-legal">
+            <NavLink to="/privacy" className="ft-link">Privacy</NavLink>
+            <NavLink to="/terms" className="ft-link">Terms</NavLink>
           </div>
         </div>
       </div>

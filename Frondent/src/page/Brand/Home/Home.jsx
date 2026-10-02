@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Product from './Product';
-import Footer from "../../../Components/Footer";
 import BrandHorizontal from '../../../Components/BrandCategories';
 import TrendingProducts from './Trendingproducts ';
 
@@ -150,7 +149,6 @@ function Home() {
       <TrendingProducts isMobile={isMobile} />
 
 
-      <Footer />
     </div>
   );
 }
