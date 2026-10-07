@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 
 // ==================== Django Auth API ====================
 const DJANGO_API = axios.create({
-  baseURL: "http://shoecart.duckdns.org/",
+  baseURL: "https://shoecart.duckdns.org/",
 });
 
 // Axios Interceptor for Token Refresh
