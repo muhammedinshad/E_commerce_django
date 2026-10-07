@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { getAllProducts } from '../../../api/api'; // ✅ existing API
 
 export default function TrendingProducts({ isMobile }) {
@@ -188,7 +188,7 @@ export default function TrendingProducts({ isMobile }) {
             <div className="tp-eyebrow">What's Hot</div>
             <div className="tp-title">TRENDING NOW</div>
           </div>
-          <NavLink to="/products" className="tp-view-all">View All</NavLink>
+          <Link to="/product" className="tp-view-all">View All</Link>
         </div>
 
         <div className="tp-grid">

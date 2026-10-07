@@ -50,13 +50,13 @@ function Footer() {
             <h2 className="ft-group-title">Shop</h2>
             <ul className="ft-group-list">
               <li>
-                <NavLink to="/nike" className="ft-link">Nike</NavLink>
+                <span className="ft-plain">Nike</span>
               </li>
               <li>
-                <NavLink to="/adidas" className="ft-link">Adidas</NavLink>
+                <span className="ft-plain">Adidas</span>
               </li>
               <li>
-                <NavLink to="/new-arrivals" className="ft-link">New Drops</NavLink>
+                <span className="ft-plain">New Drops</span>
               </li>
             </ul>
           </div>

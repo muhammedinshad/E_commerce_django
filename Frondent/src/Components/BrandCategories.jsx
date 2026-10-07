@@ -8,6 +8,7 @@ const brands = [
   {
     id: 'nike',
     name: 'NIKE',
+    filter: 'Nike',
     sub: 'Air Force 1 · Just Do It',
     image: '/nike-af1.jpeg',
     bgColor: '#8B1A1A',
@@ -16,6 +17,7 @@ const brands = [
   {
     id: 'puma',
     name: 'PUMA',
+    filter: 'Puma',
     sub: 'Speedcat OG · Forever Faster',
     image: '/puma-speedcat.jpeg',
     bgColor: '#0e5a5a',
@@ -24,6 +26,7 @@ const brands = [
   {
     id: 'adidas',
     name: 'ADIDAS',
+    filter: 'Adidas',
     sub: 'Gazelle · Impossible is Nothing',
     image: '/adidas-gazelle.jpeg',
     bgColor: '#b5820a',
@@ -32,6 +35,7 @@ const brands = [
   {
     id: 'asics',
     name: 'NEW BALANCE',
+    filter: 'New Balance',
     sub: 'Gel Series · Sound Mind, Sound Body',
     image: '/asics-gel.jpeg',
     bgColor: '#7a6a55',
@@ -181,9 +185,9 @@ export default function BrandHorizontal({ isMobile }) {
   const dispatch = useDispatch();
 
   // Click handling function
-  const handleBrandClick = (brandName) => {
-    dispatch(setBrand(brandName));
-    navigate('/product/');
+  const handleBrandClick = (brand) => {
+    dispatch(setBrand(brand.filter));
+    navigate('/product');
   };
 
   // Mobile: stack vertically with fixed height per card
@@ -209,7 +213,7 @@ export default function BrandHorizontal({ isMobile }) {
             {brands.map((brand) => (
               <div
                 key={brand.id}
-                onClick={() => handleBrandClick(brand.name)}
+                onClick={() => handleBrandClick(brand)}
                 style={{
                   position: 'relative',
                   height: 140,
@@ -289,7 +293,7 @@ export default function BrandHorizontal({ isMobile }) {
               onEnter={() => setHovered(i)}
               onLeave={() => setHovered(null)}
               isMobile={false}
-              onClick={() => handleBrandClick(brand.name)}
+              onClick={() => handleBrandClick(brand)}
             />
           ))}
         </div>

@@ -18,6 +18,7 @@ import PlaceOrder from "./page/Brand/placeOrder"
 import OrderPage from "./page/Brand/OrderPage"
 import OrderSuccessfully from "./page/Brand/OrderSuccessfully"
 import About from "./page/Brand/About"
+import ScrollToTop from "./Components/ScrollToTop"
 // Admin side
 import Admin from "./AdiminPage/Admin"
 
@@ -31,6 +32,9 @@ function App() {
 
   useEffect(() => {
     initRefresh();
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
   }, []);
 
   const token = localStorage.getItem("accessToken");
@@ -40,6 +44,7 @@ function App() {
     <div className="bg-linear-to-br from-green-50 to-gray-100">
       <ToastContainer position="top-center" autoClose={2000} limit={1} hideProgressBar />
       {!isAdmin && <NaveBar />}
+      <ScrollToTop />
       <Routes>
         <Route path="adminpage/*" element={<Admin />} />
         <Route path="/" element={<Home />} />

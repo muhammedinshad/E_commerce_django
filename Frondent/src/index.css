@@ -507,6 +507,15 @@
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
+.ft-plain {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ft-tan);
+  font-size: 15px;
+  line-height: 1.4;
+  cursor: default;
+}
+
 .ft-link:hover {
   color: var(--ft-cream);
   transform: translateX(3px);

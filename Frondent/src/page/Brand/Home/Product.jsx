@@ -41,10 +41,12 @@ function Product() {
 
     useEffect(() => {
     return () => {
-        dispatch(setSearch(""));
-        dispatch(setBrand(""));
+        if (!/^\/product\/?$/.test(window.location.pathname)) {
+            dispatch(setSearch(""));
+            dispatch(setBrand(""));
+        }
     };
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         setPage(1);
@@ -59,7 +61,7 @@ function Product() {
     const totalPages = Math.ceil(totalCount / 20);
 
     return (
-        <div id="product-section" className="bg-white min-h-screen pf-shop">
+        <div id="product-section" className="bg-white min-h-screen pf-shop flow-root">
             
             {/* Section Title */}
             <div className="flex justify-center mt-6 md:mt-8">
